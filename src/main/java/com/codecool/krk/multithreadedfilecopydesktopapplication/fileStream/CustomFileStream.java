@@ -6,7 +6,7 @@ public class CustomFileStream {
 
     private InputStream is;
     private OutputStream os;
-    byte[] buffer = new byte[1024];
+    private byte[] buffer = new byte[1024];
 
     public CustomFileStream(String source, String destination) throws IOException {
         this.is = new FileInputStream(source);
