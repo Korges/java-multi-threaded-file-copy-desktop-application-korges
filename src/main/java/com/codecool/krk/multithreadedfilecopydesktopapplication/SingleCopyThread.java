@@ -11,9 +11,10 @@ public class SingleCopyThread implements Runnable {
     byte[] buffer = new byte[1024];
     boolean isRunning;
 
-    public SingleCopyThread(String source, String destination) throws FileNotFoundException {
+    public SingleCopyThread(String source, String destination) throws IOException {
         is = new FileInputStream(source);
         os = new FileOutputStream(destination);
+        this.isRunning = true;
     }
 
     @Override

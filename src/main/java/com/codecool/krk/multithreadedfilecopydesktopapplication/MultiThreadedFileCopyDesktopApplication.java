@@ -4,6 +4,7 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.util.Scanner;
 
 
@@ -15,7 +16,7 @@ public class MultiThreadedFileCopyDesktopApplication {
 		SpringApplication.run(MultiThreadedFileCopyDesktopApplication.class, args);
 
 
-		String source = "copy-from/Apocalypto.2006.1080p.Bluray.x264.anoXmous.mp4";
+		String source = "copy-from/ave_2011.mp4";
 		String[] splittedName = source.split("/");
 		String destination = "copy-to/" + splittedName[splittedName.length-1];
 		SingleCopyThread copyFile = null;
@@ -23,7 +24,7 @@ public class MultiThreadedFileCopyDesktopApplication {
 			copyFile = new SingleCopyThread(source, destination);
 			Thread thread = new Thread(copyFile);
 			thread.start();
-		} catch (FileNotFoundException e) {
+		} catch (IOException e) {
 			e.printStackTrace();
 		}
 		Scanner sc = new Scanner(System.in);
