@@ -1,4 +1,4 @@
-package com.codecool.krk.multithreadedfilecopydesktopapplication;
+package com.codecool.krk.multithreadedfilecopydesktopapplication.fileThread;
 
 import com.codecool.krk.multithreadedfilecopydesktopapplication.queue.Queue;
 import com.codecool.krk.multithreadedfilecopydesktopapplication.queue.SingleCopyThread;
