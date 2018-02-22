@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import java.lang.*?>
+<?import javafx.scene.layout.*?>
+
+
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="180.0" prefWidth="500.0" scaleShape="false" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.codecool.krk.multithreadedfilecopydesktopapplication.controller.CopyWindowController">
+   <children>
+      <SplitPane layoutX="10.0" layoutY="10.0" prefHeight="120.0" prefWidth="480.0">
+         <items>
+            <Pane prefHeight="200.0" prefWidth="200.0">
+               <children>
+                  <TextField fx:id="source" layoutX="100.0" layoutY="10.0" prefWidth="370.0" promptText="Enter source file" />
+                  <TextField fx:id="destination" layoutX="100.0" layoutY="45.0" prefWidth="370.0" promptText="Enter destination" />
+                  <Label layoutX="19.0" layoutY="16.0" text="Copy from:" />
+                  <Label layoutX="36.0" layoutY="52.0" text="Copy to:" />
+                  <CheckBox fx:id="overwrite" layoutX="45.0" layoutY="86.0" mnemonicParsing="false" text="Overwrite" />
+               </children>
+            </Pane>
+         </items>
+      </SplitPane>
+      <Button fx:id="ok" layoutX="353.0" layoutY="143.0" mnemonicParsing="false" onAction="#onActionOK" prefWidth="65.0" text="OK" />
+      <Button fx:id="cancel" layoutX="426.0" layoutY="143.0" mnemonicParsing="false" onAction="#onActionCancel" prefWidth="65.0" text="Cancel" />
+   </children>
+</Pane>
