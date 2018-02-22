@@ -83,7 +83,7 @@ public class SingleCopyThread implements Runnable {
         return (length = stream.inputStreamLength()) > 0 && isRunning;
     }
 
-    public void interruptThread() throws IOException {
+    public void interruptThread() throws NullPointerException {
 
         System.out.println(stream.getFileName() + " aborted!");
         isRunning = false;

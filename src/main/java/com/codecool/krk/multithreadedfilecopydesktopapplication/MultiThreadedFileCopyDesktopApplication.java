@@ -20,10 +20,10 @@ public class MultiThreadedFileCopyDesktopApplication {
             do {
                 method = sc.nextLine().toUpperCase();
                 try {
-                    if(method.equals("COPY")) {
+                    if (method.equals("COPY")) {
 
-                            SingleCopyThread singleThread = new SingleCopyThread(createStream(sc));
-                            pool.createThreadPool(singleThread);
+                        SingleCopyThread singleThread = new SingleCopyThread(createStream(sc));
+                        pool.createThreadPool(singleThread);
 
                     } else if (method.equals("STOP")) {
 
@@ -31,6 +31,8 @@ public class MultiThreadedFileCopyDesktopApplication {
                         SingleCopyThread singleThread = SingleCopyThread.getSingleThreadByName(threadToStop);
                         singleThread.interruptThread();
                     }
+                } catch (NullPointerException e) {
+                    System.out.println("File not found");
                 } catch (FileNotFoundException e) {
                     System.out.println("Wrong source path");
                 } catch (IOException e) {
