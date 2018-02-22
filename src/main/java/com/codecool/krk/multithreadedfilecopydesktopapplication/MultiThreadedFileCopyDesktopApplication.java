@@ -2,50 +2,50 @@ package com.codecool.krk.multithreadedfilecopydesktopapplication;
 
 import com.codecool.krk.multithreadedfilecopydesktopapplication.fileStream.CustomFileStream;
 import com.codecool.krk.multithreadedfilecopydesktopapplication.fileThread.SingleCopyThread;
-import org.springframework.boot.SpringApplication;
-import org.springframework.boot.autoconfigure.SpringBootApplication;
-
+import com.codecool.krk.multithreadedfilecopydesktopapplication.fileThread.ThreadPool;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.Scanner;
 
-@SpringBootApplication
+
 public class MultiThreadedFileCopyDesktopApplication {
+
 
     public static void main(String[] args) {
 
-        SpringApplication.run(MultiThreadedFileCopyDesktopApplication.class, args);
+        Scanner sc = new Scanner(System.in);
+        ThreadPool pool = new ThreadPool();
+        String method;
 
-        SingleCopyThread copyFile = null;
+            do {
+                method = sc.nextLine().toUpperCase();
+                try {
+                    if(method.equals("COPY")) {
 
-        try {
-            copyFile = new SingleCopyThread(createStream());
-            System.out.println(copyFile.stream.getInputStream().available());
-            Thread thread = new Thread(copyFile);
-            thread.start();
+                            SingleCopyThread singleThread = new SingleCopyThread(createStream(sc));
+                            pool.createThreadPool(singleThread);
 
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        Scanner sc = null;
-        manageInputs(sc, copyFile);
-        sc.close();
+                    } else if (method.equals("STOP")) {
+
+                        String threadToStop = sc.nextLine();
+                        SingleCopyThread singleThread = SingleCopyThread.getSingleThreadByName(threadToStop);
+                        singleThread.interruptThread();
+                    }
+                } catch (FileNotFoundException e) {
+                    System.out.println("Wrong source path");
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+
+            } while (!method.equals("EXIT"));
+
     }
 
-    private static CustomFileStream createStream() throws IOException {
-        String source = "copy-from/inteliJ.tar.gz";
+
+    private static CustomFileStream createStream(Scanner sc) throws IOException {
+        String source = sc.nextLine();
         String[] splittedSource = source.split("/");
-        String destination = "copy-to/" + splittedSource[splittedSource.length - 1];
+        String destination = sc.nextLine() + "/" + splittedSource[splittedSource.length - 1];
         return new CustomFileStream(source, destination);
-    }
-
-    private static void manageInputs(Scanner sc, SingleCopyThread copyFile) {
-        sc = new Scanner(System.in);
-        String input = null;
-        do {
-            input = sc.nextLine();
-            if(input.equals("stop")) {
-                copyFile.interruptThread();
-            }
-        } while (input.equals("exit"));
     }
 }

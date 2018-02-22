@@ -6,11 +6,23 @@ public class CustomFileStream {
 
     private InputStream is;
     private OutputStream os;
+    private String fileName;
     private byte[] buffer = new byte[1024];
 
-    public CustomFileStream(String source, String destination) throws IOException {
+    public CustomFileStream(String source, String destination) throws FileNotFoundException {
+        this.fileName = source;
         this.is = new FileInputStream(source);
         this.os = new FileOutputStream(destination);
+    }
+
+    public String getFileName() {
+        return fileName;
+    }
+
+    public String getSimpleFileName() {
+        String[] splittedSource = fileName.split("/");
+        String simpleFileName = splittedSource[splittedSource.length - 1];
+        return simpleFileName;
     }
 
     public InputStream getInputStream() {
