@@ -28,24 +28,14 @@ public class SingleCopyThread implements Runnable {
         System.out.println("Copying " + stream.getSimpleFileName() + " file.");
 
         try {
-//            String toPrint = "[" + String.join("", Collections.nCopies(102, " ")) + "]";
-//            StringBuilder str = new StringBuilder(toPrint).append("   %");
-            long percentage;
-            long fileSizeBytes = stream.getInputStream().available();
-            long current = 0;
 
             while (isAbleToRead()) {
 
                 try {
                     stream.getOutputStream().write(stream.getBuffer(), 0, length);
-                    Thread.sleep(0,1);
-                } catch (InterruptedException e) {
+                } catch (Exception e) {
                     e.printStackTrace();
                 }
-//                clearConsole();
-//                current += length;
-//                percentage = 100 * current / fileSizeBytes;
-//                showStatusBar(str, percentage);
             }
             System.out.println("Copying " + stream.getSimpleFileName() + " finished after " + (System.currentTimeMillis() - time)/1000);
             this.stream.closeStreams();
@@ -66,17 +56,6 @@ public class SingleCopyThread implements Runnable {
             }
         }
         return null;
-    }
-
-    private static void clearConsole() {
-        System.out.print(String.format("\033[%dA",1));
-    }
-
-    private static void showStatusBar(StringBuilder statusBar, long percentage) {
-        int percent = (int) percentage;
-        statusBar.replace(percent+1, percent+2, "\u25A0")
-                .replace(104, 107, String.format("%3s", percent));
-        System.out.println(statusBar);
     }
 
     private boolean isAbleToRead() throws IOException {
