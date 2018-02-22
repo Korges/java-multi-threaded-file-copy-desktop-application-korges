@@ -6,9 +6,7 @@ import java.util.concurrent.Executors;
 
 public class ThreadPool {
 
-
     ExecutorService executor = Executors.newFixedThreadPool(2);
-
 
     public void createThreadPool(SingleCopyThread thread) {
 
