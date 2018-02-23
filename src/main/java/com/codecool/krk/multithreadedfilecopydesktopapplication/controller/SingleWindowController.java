@@ -6,6 +6,8 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
+import javafx.scene.control.ScrollPane;
+import javafx.scene.control.SplitPane;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 import java.io.IOException;
@@ -37,22 +39,15 @@ public class SingleWindowController {
     }
 
     public void createTemplate(Label newLabel) throws IOException {
-        ff();
+
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/fxml/SingleWindow.fxml"));
 
         Pane pane = fxmlLoader.load();
 
-        Scene scene = new Scene(pane);
-        Stage stage = new Stage();
-
         pane.getChildren().add(newLabel);
 
+        ff(pane);
 
-        stage.setScene(scene);
-        stage.setOnHidden(event -> MainWindowController.shutdown());
-        stage.setResizable(false);
-
-        stage.show();
     }
 
 
@@ -66,19 +61,11 @@ public class SingleWindowController {
 
     }
 
-    public void ff() throws IOException {
-        FXMLLoader loader = new FXMLLoader();
-        loader.setLocation(this.getClass().getResource("/fxml/MainWindow.fxml"));
-        Pane stackPane = loader.load();
-        Label label = new Label("CHUhgfhfhfghfghfJ");
-        stackPane.getChildren().add(label);
-        Stage stage = MultiThreadedFileCopyDesktopApplication.getPrimaryStage();
-        Scene scene = new Scene(stackPane);
-
-
-        stage.setScene(scene);
-        stage.setTitle("Copy Manager");
-        stage.setResizable(false);
-        stage.show();
+    public void ff(Pane pane) throws IOException {
+        Pane primaryPane = MultiThreadedFileCopyDesktopApplication.getPrimaryPane();
+        SplitPane splitPane = (SplitPane) primaryPane.getChildren().get(1);
+        Pane insidePane = (Pane) splitPane.getChildrenUnmodifiable().get(0);
+        insidePane.getChildren().add(pane);
+//        MultiThreadedFileCopyDesktopApplication.setPrimaryPane(primaryPane);
     }
 }

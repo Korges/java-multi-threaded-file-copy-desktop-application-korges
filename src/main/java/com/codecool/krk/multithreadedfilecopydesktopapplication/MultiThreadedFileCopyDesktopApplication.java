@@ -17,7 +17,7 @@ public class MultiThreadedFileCopyDesktopApplication extends Application {
 
     static ThreadPool  pool = new ThreadPool();
     private static Stage primaryStage;
-    private static Scene primaryScene;
+    private static Pane primaryPane;
 
     public static void main(String[] args) {
 
@@ -58,12 +58,13 @@ public class MultiThreadedFileCopyDesktopApplication extends Application {
     public void start(Stage primaryStage) throws Exception {
 
         setPrimaryStage(primaryStage);
-        setPrimaryScene(primaryScene);
+
         FXMLLoader loader = new FXMLLoader();
         loader.setLocation(this.getClass().getResource("/fxml/MainWindow.fxml"));
 
 
         Pane stackPane = loader.load();
+        setPrimaryPane(stackPane);
 
         Scene scene = new Scene(stackPane);
 
@@ -85,11 +86,11 @@ public class MultiThreadedFileCopyDesktopApplication extends Application {
 
 
 
-    public static Scene getPrimaryScene() {
-        return primaryScene;
+    public static Pane getPrimaryPane() {
+        return primaryPane;
     }
 
-    private void setPrimaryScene(Scene primaryScene) {
-        MultiThreadedFileCopyDesktopApplication.primaryScene = primaryScene;
+    public static void setPrimaryPane(Pane primaryPane) {
+        MultiThreadedFileCopyDesktopApplication.primaryPane = primaryPane;
     }
 }
