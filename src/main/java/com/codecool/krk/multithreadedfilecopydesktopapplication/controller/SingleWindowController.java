@@ -1,14 +1,24 @@
 package com.codecool.krk.multithreadedfilecopydesktopapplication.controller;
 
 import com.codecool.krk.multithreadedfilecopydesktopapplication.MultiThreadedFileCopyDesktopApplication;
+import com.codecool.krk.multithreadedfilecopydesktopapplication.fileStream.CustomFileStream;
+import com.codecool.krk.multithreadedfilecopydesktopapplication.fileThread.SingleCopyThread;
 import javafx.application.Platform;
+import javafx.concurrent.Task;
+import javafx.event.Event;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
+import javafx.scene.control.ProgressBar;
+import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
+
+import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.rmi.server.ExportException;
 
 
 public class SingleWindowController {
@@ -18,15 +28,24 @@ public class SingleWindowController {
     @FXML
     private Label fromtoid;
 
+    SingleCopyThread singleThread;
+
+    @FXML
+    private ProgressBar bar;
+
     public SingleWindowController() {
 
     }
 
-    public SingleWindowController(String sourcePath, String destinationPath) throws IOException {
+    public SingleWindowController(SingleCopyThread singleCopyThread) throws IOException {
 
-        Label newLabel = new Label(sourcePath + "  to  " + destinationPath);
+        bar = new ProgressBar(0);
+        this.singleThread = singleCopyThread;
+        Label newLabel = new Label(singleThread.stream.getFileName() + "  to  "
+                                   + singleThread.stream.getDestination());
         newLabel.setLayoutX(87);
         newLabel.setLayoutY(25);
+
         createTemplate(newLabel);
 
     }
@@ -37,7 +56,7 @@ public class SingleWindowController {
     }
 
     public void createTemplate(Label newLabel) throws IOException {
-        ff();
+//        ff();
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/fxml/SingleWindow.fxml"));
 
         Pane pane = fxmlLoader.load();
@@ -45,7 +64,16 @@ public class SingleWindowController {
         Scene scene = new Scene(pane);
         Stage stage = new Stage();
 
+        bar.setLayoutX(14);
+        bar.setLayoutY(65);
+        bar.setMinWidth(700);
+        bar.progressProperty().unbind();
+        bar.progressProperty().bind(singleThread.progressProperty());
+
+        pane.getChildren().add(bar);
         pane.getChildren().add(newLabel);
+        MultiThreadedFileCopyDesktopApplication.runThread(singleThread);
+
 
 
         stage.setScene(scene);
@@ -53,11 +81,9 @@ public class SingleWindowController {
         stage.setResizable(false);
 
         stage.show();
+
     }
 
-
-    @FXML
-    private Label progress;
 
 
     @FXML
@@ -74,7 +100,6 @@ public class SingleWindowController {
         stackPane.getChildren().add(label);
         Stage stage = MultiThreadedFileCopyDesktopApplication.getPrimaryStage();
         Scene scene = new Scene(stackPane);
-
 
         stage.setScene(scene);
         stage.setTitle("Copy Manager");
