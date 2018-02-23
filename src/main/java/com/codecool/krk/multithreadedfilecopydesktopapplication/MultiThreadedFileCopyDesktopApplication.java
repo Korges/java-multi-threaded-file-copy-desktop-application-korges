@@ -1,6 +1,5 @@
 package com.codecool.krk.multithreadedfilecopydesktopapplication;
 
-import com.codecool.krk.multithreadedfilecopydesktopapplication.controller.MainWindowController;
 import com.codecool.krk.multithreadedfilecopydesktopapplication.fileStream.CustomFileStream;
 import com.codecool.krk.multithreadedfilecopydesktopapplication.fileThread.SingleCopyThread;
 import com.codecool.krk.multithreadedfilecopydesktopapplication.fileThread.ThreadPool;
@@ -8,23 +7,17 @@ import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
 import javafx.scene.layout.Pane;
-import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
-
-
-import java.io.File;
 import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.util.Scanner;
+
 
 
 public class MultiThreadedFileCopyDesktopApplication extends Application {
 
     static ThreadPool  pool = new ThreadPool();
     private static Stage primaryStage;
-    private static Stage primaryScene;
+    private static Scene primaryScene;
 
     public static void main(String[] args) {
 
@@ -65,6 +58,7 @@ public class MultiThreadedFileCopyDesktopApplication extends Application {
     public void start(Stage primaryStage) throws Exception {
 
         setPrimaryStage(primaryStage);
+        setPrimaryScene(primaryScene);
         FXMLLoader loader = new FXMLLoader();
         loader.setLocation(this.getClass().getResource("/fxml/MainWindow.fxml"));
 
@@ -87,5 +81,15 @@ public class MultiThreadedFileCopyDesktopApplication extends Application {
 
     private void setPrimaryStage(Stage primaryStage) {
         MultiThreadedFileCopyDesktopApplication.primaryStage = primaryStage;
+    }
+
+
+
+    public static Scene getPrimaryScene() {
+        return primaryScene;
+    }
+
+    private void setPrimaryScene(Scene primaryScene) {
+        MultiThreadedFileCopyDesktopApplication.primaryScene = primaryScene;
     }
 }
