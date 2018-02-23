@@ -44,7 +44,7 @@ public class SingleCopyThread extends Task<Integer> implements Runnable {
 
                 try {
                     stream.getOutputStream().write(stream.getBuffer(), 0, length);
-                    Thread.sleep(1);
+//                    Thread.sleep(1);
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
