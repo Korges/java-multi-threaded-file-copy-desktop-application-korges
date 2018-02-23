@@ -1,7 +1,9 @@
 package com.codecool.krk.multithreadedfilecopydesktopapplication.controller;
 
 import com.codecool.krk.multithreadedfilecopydesktopapplication.MultiThreadedFileCopyDesktopApplication;
+import com.codecool.krk.multithreadedfilecopydesktopapplication.fileStream.CustomFileStream;
 import com.codecool.krk.multithreadedfilecopydesktopapplication.fileThread.SingleCopyThread;
+import com.sun.xml.internal.bind.v2.runtime.unmarshaller.XsiNilLoader;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
@@ -42,8 +44,9 @@ public class CopyWindowController {
         destinationPath = destination.textProperty().getValue();
         String[] splittedSource = sourcePath.split("/");
         destinationPath = destinationPath + "/" + splittedSource[splittedSource.length-1];
-        MultiThreadedFileCopyDesktopApplication.copyFile(sourcePath, destinationPath);
-        new SingleWindowController(sourcePath, destinationPath);
+        SingleCopyThread singleThread =
+                MultiThreadedFileCopyDesktopApplication.createThread(sourcePath, destinationPath);
+        new SingleWindowController(singleThread);
         Stage stage = (Stage) ok.getScene().getWindow();
         stage.close();
     }

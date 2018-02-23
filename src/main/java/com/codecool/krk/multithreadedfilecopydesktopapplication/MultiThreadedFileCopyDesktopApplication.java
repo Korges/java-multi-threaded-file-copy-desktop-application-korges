@@ -3,6 +3,7 @@ package com.codecool.krk.multithreadedfilecopydesktopapplication;
 import com.codecool.krk.multithreadedfilecopydesktopapplication.fileStream.CustomFileStream;
 import com.codecool.krk.multithreadedfilecopydesktopapplication.fileThread.SingleCopyThread;
 import com.codecool.krk.multithreadedfilecopydesktopapplication.fileThread.ThreadPool;
+import com.sun.xml.internal.bind.v2.runtime.unmarshaller.XsiNilLoader;
 import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.fxml.FXMLLoader;
@@ -43,15 +44,20 @@ public class MultiThreadedFileCopyDesktopApplication extends Application {
     }
 
 
-    public static void copyFile(String source, String destination) {
+    public static SingleCopyThread createThread(String source, String destination) {
 
-        try { ;
+        SingleCopyThread thread = null;
+        try {
             CustomFileStream cs = new CustomFileStream(source, destination);
-            SingleCopyThread singleThread = new SingleCopyThread(cs);
-            pool.createThreadPool(singleThread);
+            thread = new SingleCopyThread(cs);
         } catch (FileNotFoundException e) {
             System.out.println("STOP");
         }
+        return thread;
+    }
+
+    public static void runThread(SingleCopyThread thread) {
+        pool.createThreadPool(thread);
     }
 
     @Override

@@ -1,15 +1,19 @@
 package com.codecool.krk.multithreadedfilecopydesktopapplication.fileThread;
 
 import com.codecool.krk.multithreadedfilecopydesktopapplication.fileStream.CustomFileStream;
+import javafx.beans.property.ReadOnlyDoubleProperty;
+import javafx.concurrent.Task;
+import javafx.scene.control.ProgressBar;
 
 import java.io.*;
 import java.util.ArrayList;
-import java.util.Collections;
+import java.util.concurrent.ExecutionException;
 
-public class SingleCopyThread implements Runnable {
+public class SingleCopyThread extends Task<Integer> implements Runnable {
 
     public CustomFileStream stream;
 
+    private ProgressBar progressBar;
     private int length;
     private boolean isRunning;
     private static ArrayList<SingleCopyThread> threadList = new ArrayList<SingleCopyThread>();
@@ -24,31 +28,32 @@ public class SingleCopyThread implements Runnable {
     @Override
     public void run() {
 
-
-        System.out.println("Copying " + stream.getSimpleFileName() + " file.");
-
         try {
-//            String toPrint = "[" + String.join("", Collections.nCopies(102, " ")) + "]";
-//            StringBuilder str = new StringBuilder(toPrint).append("   %");
-            long percentage;
-            long fileSizeBytes = stream.getInputStream().available();
-            long current = 0;
+            System.out.println("Copying " + stream.getSimpleFileName() + " file.");
+            call();
+        } catch (IOException e) {}
+    }
 
+    protected Integer call() throws IOException {
+        int iterations = 0;
+        long bytesAvailable = stream.getInputStream().available();
+        try {
+
+            System.out.println("Reading file...");
             while (isAbleToRead()) {
 
                 try {
                     stream.getOutputStream().write(stream.getBuffer(), 0, length);
-                    Thread.sleep(0,1);
-                } catch (InterruptedException e) {
+//                    Thread.sleep(1);
+                } catch (Exception e) {
                     e.printStackTrace();
                 }
-//                clearConsole();
-//                current += length;
-//                percentage = 100 * current / fileSizeBytes;
-//                showStatusBar(str, percentage);
+                iterations++;
+                this.updateProgress(iterations, bytesAvailable / stream.getBytes());
             }
-            System.out.println("Copying " + stream.getSimpleFileName() + " finished after " + (System.currentTimeMillis() - time)/1000);
             this.stream.closeStreams();
+
+            System.out.println("Reading finished!");
 
         } catch (FileNotFoundException e) {
             System.out.println("File not found");
@@ -56,6 +61,8 @@ public class SingleCopyThread implements Runnable {
         } catch (IOException e) {
             e.printStackTrace();
         }
+
+        return iterations;
     }
 
     public static SingleCopyThread getSingleThreadByName(String name) {
@@ -68,18 +75,7 @@ public class SingleCopyThread implements Runnable {
         return null;
     }
 
-    private static void clearConsole() {
-        System.out.print(String.format("\033[%dA",1));
-    }
-
-    private static void showStatusBar(StringBuilder statusBar, long percentage) {
-        int percent = (int) percentage;
-        statusBar.replace(percent+1, percent+2, "\u25A0")
-                .replace(104, 107, String.format("%3s", percent));
-        System.out.println(statusBar);
-    }
-
-    private boolean isAbleToRead() throws IOException {
+    public boolean isAbleToRead() throws IOException {
         return (length = stream.inputStreamLength()) > 0 && isRunning;
     }
 
@@ -88,5 +84,15 @@ public class SingleCopyThread implements Runnable {
         System.out.println(stream.getFileName() + " aborted!");
         isRunning = false;
     }
+
+    public int getLength() {
+        return length;
+    }
+
+    public void setProgressBar(ProgressBar progressBar) {
+        this.progressBar = progressBar;
+    }
+
+
 }
 

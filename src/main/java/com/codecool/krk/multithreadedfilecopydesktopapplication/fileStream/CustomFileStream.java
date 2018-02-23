@@ -7,16 +7,16 @@ public class CustomFileStream {
     private InputStream is;
     private OutputStream os;
     private String fileName;
-    private byte[] buffer = new byte[1024];
+    private String destination;
+
+    private final int bytes = 1024;
+    private byte[] buffer = new byte[bytes];
 
     public CustomFileStream(String source, String destination) throws FileNotFoundException {
         this.fileName = source;
+        this.destination = destination;
         this.is = new FileInputStream(source);
         this.os = new FileOutputStream(destination);
-    }
-
-    public String getFileName() {
-        return fileName;
     }
 
     public String getSimpleFileName() {
@@ -37,8 +37,20 @@ public class CustomFileStream {
         return buffer;
     }
 
+    public String getFileName() {
+        return fileName;
+    }
+
+    public String getDestination() {
+        return destination;
+    }
+
     public int inputStreamLength() throws IOException {
         return this.is.read(buffer);
+    }
+
+    public int getBytes() {
+        return this.bytes;
     }
 
     public void closeStreams() throws IOException {
