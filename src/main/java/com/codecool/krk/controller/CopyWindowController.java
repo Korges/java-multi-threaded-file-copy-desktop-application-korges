@@ -51,6 +51,7 @@ public class CopyWindowController {
         try {
             SingleCopyThread thread = createThread();
             SingleWindow singleWindow = new SingleWindow(thread);
+            thread.setSingleWindow(singleWindow);
             BorderPane pane = singleWindow.createNewThread(sourcePath, destinationPath);
             runThread(thread);
             MainWindow.addPaneToVBox(pane);

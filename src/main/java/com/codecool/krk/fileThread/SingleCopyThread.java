@@ -3,25 +3,26 @@ package com.codecool.krk.fileThread;
 
 import com.codecool.krk.fileStream.CustomFileStream;
 import com.codecool.krk.windows.SingleWindow;
-import javafx.concurrent.Task;
-import java.io.FileNotFoundException;
+
 import java.io.IOException;
 import java.util.ArrayList;
 
-public class SingleCopyThread extends Task<Integer> implements Runnable {
+public class SingleCopyThread implements Runnable {
 
     private SingleWindow singleWindow;
     public CustomFileStream stream;
     private int length;
     private boolean isRunning;
-    private static ArrayList<SingleCopyThread> threadList = new ArrayList<SingleCopyThread>();
+    private static ArrayList<SingleCopyThread> threadList = new ArrayList<>();
 
+    public void setSingleWindow(SingleWindow singleWindow) {
+        this.singleWindow = singleWindow;
+    }
 
     public SingleCopyThread(CustomFileStream stream) {
         this.stream = stream;
         this.isRunning = true;
         this.threadList.add(this);
-        this.singleWindow = new SingleWindow(this);
     }
 
     @Override
@@ -29,42 +30,46 @@ public class SingleCopyThread extends Task<Integer> implements Runnable {
 
         try {
             call();
-        } catch (IOException e) {}
+        } catch (IOException e) {
+
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
     }
 
-    protected Integer call() throws IOException {
-        int iterations = 0;
-        long bytesAvailable = stream.getInputStream().available();
+    protected void call() throws IOException, InterruptedException {
 
+        double onePercent = stream.getInputStream().available()/1000;
+        double current = 0;
+        double progress = 0.001;
 
         try {
 
             while (isAbleToRead()) {
 
+                current += length;
+
+                if (current>=onePercent) {
+                    progress += 0.001;
+                    current = 0;
+                    singleWindow.setProgress(progress);
+                }
+
 
                 try {
-                    Thread.sleep(0,1);
                     stream.getOutputStream().write(stream.getBuffer(), 0, length);
 
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
-                iterations++;
-                this.updateProgress(iterations, bytesAvailable / stream.getBytes());
 
             }
+            singleWindow.setStopButtonUnavalible();
             this.stream.closeStreams();
-
-
-
-        } catch (FileNotFoundException e) {
-            System.out.println("File not found");
 
         } catch (IOException e) {
             e.printStackTrace();
         }
-
-        return iterations;
     }
 
     public static ArrayList<SingleCopyThread> getAllThreads() {
@@ -88,6 +93,7 @@ public class SingleCopyThread extends Task<Integer> implements Runnable {
 
         isRunning = false;
     }
+
 
 
 }

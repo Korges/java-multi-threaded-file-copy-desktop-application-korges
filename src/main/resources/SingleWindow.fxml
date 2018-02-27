@@ -3,7 +3,6 @@
 <?import javafx.scene.text.*?>
 <?import javafx.geometry.*?>
 <?import javafx.scene.control.*?>
-<?import java.lang.*?>
 <?import javafx.scene.layout.*?>
 
 <BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefWidth="600.0" style="-fx-border-color: d1d1e0;" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.codecool.krk.controller.SingleWindowController">
@@ -12,7 +11,7 @@
          <children>
             <Label fx:id="time" text="Label" />
             <Region prefWidth="200.0" HBox.hgrow="ALWAYS" />
-            <Button mnemonicParsing="false" onAction="#stopOnAction" text="STOP" />
+            <Button fx:id="stop" mnemonicParsing="false" onAction="#stopOnAction" text="STOP" />
          </children>
          <BorderPane.margin>
             <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
