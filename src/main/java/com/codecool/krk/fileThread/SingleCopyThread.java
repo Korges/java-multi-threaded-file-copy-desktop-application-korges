@@ -39,24 +39,27 @@ public class SingleCopyThread implements Runnable {
 
     protected void call() throws IOException, InterruptedException {
 
-        double onePercent = stream.getInputStream().available()/1000;
-        double current = 0;
-        double progress = 0.001;
+        long onePercent = stream.getInputStream().available()/100;
+        long size = 0;
+        double progress = 0.01F;
 
         try {
 
             while (isAbleToRead()) {
 
-                current += length;
 
-                if (current>=onePercent) {
-                    progress += 0.001;
-                    current = 0;
-                    singleWindow.setProgress(progress);
-                }
+
+
 
 
                 try {
+                    size += length;
+                    if(size >= onePercent) { ;
+                        size = 0;
+                        progress += 0.01F;
+                        singleWindow.setProgress(progress);
+
+                    }
                     stream.getOutputStream().write(stream.getBuffer(), 0, length);
 
                 } catch (Exception e) {
