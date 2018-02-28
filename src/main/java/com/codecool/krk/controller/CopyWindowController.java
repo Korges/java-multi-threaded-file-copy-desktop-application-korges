@@ -1,6 +1,5 @@
 package com.codecool.krk.controller;
 
-import com.codecool.krk.App;
 import com.codecool.krk.exception.WrongDestinationException;
 import com.codecool.krk.fileStream.CustomFileStream;
 import com.codecool.krk.fileThread.SingleCopyThread;
@@ -13,11 +12,9 @@ import javafx.scene.control.CheckBox;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
-
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.nio.file.FileSystemException;
 
 
 public class CopyWindowController {

@@ -1,7 +1,6 @@
 package com.codecool.krk.windows;
 
-import javafx.event.EventHandler;
-import javafx.fxml.FXML;
+
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -9,8 +8,6 @@ import javafx.scene.control.ScrollPane;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
-import javafx.stage.WindowEvent;
-
 import java.io.IOException;
 
 public class MainWindow {

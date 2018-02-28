@@ -3,7 +3,6 @@ package com.codecool.krk.controller;
 import com.codecool.krk.fileThread.SingleCopyThread;
 import com.codecool.krk.windows.CopyWindow;
 import javafx.fxml.FXML;
-
 import java.io.IOException;
 import java.util.ArrayList;
 

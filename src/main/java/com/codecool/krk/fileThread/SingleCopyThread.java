@@ -5,8 +5,6 @@ import com.codecool.krk.fileStream.CustomFileStream;
 import com.codecool.krk.windows.SingleWindow;
 
 import java.io.IOException;
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 
 public class SingleCopyThread implements Runnable {
@@ -51,6 +49,7 @@ public class SingleCopyThread implements Runnable {
 
     protected void call() throws IOException, InterruptedException {
 
+        singleWindow.setInfoLabelStatus("");
         onePercent = stream.getInputStream().available()/100;
 
         start = System.currentTimeMillis();
@@ -58,7 +57,7 @@ public class SingleCopyThread implements Runnable {
         try {
             while (isAbleToRead()) {
 
-//                Thread.sleep(1);
+                Thread.sleep(1);
                 executeMethodOncePerSecond(start);
                 try {
                     setProgressBars();
@@ -112,7 +111,7 @@ public class SingleCopyThread implements Runnable {
 
     private void setProgressBars() {
         size += length;
-        if(size >= onePercent) {
+        if((size >= onePercent)) {
             size = 0;
             progress += 0.01F;
             singleWindow.setProgress(progress);
@@ -122,9 +121,16 @@ public class SingleCopyThread implements Runnable {
     }
 
     private void setFinalStatusElements() {
-        singleWindow.showDoneLabel();
-        singleWindow.setStopButtonUnavalible();
-        singleWindow.setProgress(1F);
+
+        if(isRunning) {
+            singleWindow.setInfoLabelStatus("Operation finished successfully");
+            singleWindow.setStopButtonUnavalible();
+            singleWindow.setProgress(1F);
+        } else {
+            singleWindow.setInfoLabelStatus("Operation interrupted");
+            singleWindow.setStopButtonUnavalible();
+        }
+
     }
 }
 

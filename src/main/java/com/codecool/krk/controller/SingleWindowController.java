@@ -9,7 +9,6 @@ public class SingleWindowController {
 
     public Label elapsedTime;
     public Button stopButton;
-    public Label doneLabel;
 
     @FXML
     private Label source;
