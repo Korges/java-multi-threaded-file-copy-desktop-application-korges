@@ -20,7 +20,7 @@ public class SingleCopyThread implements Runnable {
     private long start;
     private long onePercent;
     private long size = 0;
-    private double progress = 0.01F;
+    private double progress = 0F;
     private static ArrayList<SingleCopyThread> threadList = new ArrayList<>();
 
 
@@ -69,8 +69,7 @@ public class SingleCopyThread implements Runnable {
                 }
 
             }
-            singleWindow.showDoneLabel();
-            singleWindow.setStopButtonUnavalible();
+            setFinalStatusElements();
             this.stream.closeStreams();
 
         } catch (IOException e) {
@@ -119,6 +118,13 @@ public class SingleCopyThread implements Runnable {
             singleWindow.setProgress(progress);
 
         }
+
+    }
+
+    private void setFinalStatusElements() {
+        singleWindow.showDoneLabel();
+        singleWindow.setStopButtonUnavalible();
+        singleWindow.setProgress(1F);
     }
 }
 

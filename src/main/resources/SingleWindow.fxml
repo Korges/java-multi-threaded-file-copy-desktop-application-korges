@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import java.lang.*?>
 <?import javafx.scene.text.*?>
 <?import javafx.geometry.*?>
 <?import javafx.scene.control.*?>
@@ -10,9 +11,9 @@
       <HBox alignment="CENTER_RIGHT" BorderPane.alignment="TOP_RIGHT">
          <children>
             <Label fx:id="elapsedTime" text="00:00:00" />
-            <Region prefWidth="200.0" HBox.hgrow="ALWAYS" />
-            <Label fx:id="doneLabel" text="DONE" visible="false"/>
-            <Region prefWidth="200.0" HBox.hgrow="ALWAYS" />
+            <Region HBox.hgrow="ALWAYS" />
+            <Label fx:id="doneLabel" text="Operation finished successfully" visible="false" />
+            <Region HBox.hgrow="ALWAYS" />
             <Button fx:id="stopButton" mnemonicParsing="false" onAction="#stopOnAction" text="STOP" />
          </children>
          <BorderPane.margin>

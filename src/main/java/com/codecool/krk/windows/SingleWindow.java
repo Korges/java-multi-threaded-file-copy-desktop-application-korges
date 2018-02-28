@@ -62,8 +62,18 @@ public class SingleWindow {
     }
 
     public void setProgress(double value) {
-        this.bar.setProgress(value);
-        this.progressLabel.setProgress(value);
+
+        Platform.runLater(new Runnable() {
+
+            @Override public void run() {
+
+                bar.setProgress(value);
+                progressLabel.setProgress(value);
+            }
+        });
+
+
+
     }
 
     public void setStopButtonUnavalible() {
@@ -85,6 +95,7 @@ public class SingleWindow {
         Platform.runLater(new Runnable() {
 
             @Override public void run() {
+
                 elapsedTime.setText(String.valueOf(time));
             }
         });
