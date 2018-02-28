@@ -5,15 +5,25 @@ import com.codecool.krk.fileStream.CustomFileStream;
 import com.codecool.krk.windows.SingleWindow;
 
 import java.io.IOException;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 
 public class SingleCopyThread implements Runnable {
 
     private SingleWindow singleWindow;
-    public CustomFileStream stream;
+    private CustomFileStream stream;
     private int length;
     private boolean isRunning;
+    private long startTime;
+    private long elapsedTime;
+    private long start;
+    private long onePercent;
+    private long size = 0;
+    private double progress = 0.01F;
     private static ArrayList<SingleCopyThread> threadList = new ArrayList<>();
+
+
 
     public void setSingleWindow(SingleWindow singleWindow) {
         this.singleWindow = singleWindow;
@@ -22,11 +32,13 @@ public class SingleCopyThread implements Runnable {
     public SingleCopyThread(CustomFileStream stream) {
         this.stream = stream;
         this.isRunning = true;
-        this.threadList.add(this);
+        threadList.add(this);
     }
 
     @Override
     public void run() {
+
+        startTime = System.currentTimeMillis();
 
         try {
             call();
@@ -39,27 +51,17 @@ public class SingleCopyThread implements Runnable {
 
     protected void call() throws IOException, InterruptedException {
 
-        long onePercent = stream.getInputStream().available()/100;
-        long size = 0;
-        double progress = 0.01F;
+        onePercent = stream.getInputStream().available()/100;
+
+        start = System.currentTimeMillis();
 
         try {
-
             while (isAbleToRead()) {
 
-
-
-
-
-
+//                Thread.sleep(1);
+                executeMethodOncePerSecond(start);
                 try {
-                    size += length;
-                    if(size >= onePercent) { ;
-                        size = 0;
-                        progress += 0.01F;
-                        singleWindow.setProgress(progress);
-
-                    }
+                    setProgressBars();
                     stream.getOutputStream().write(stream.getBuffer(), 0, length);
 
                 } catch (Exception e) {
@@ -67,6 +69,7 @@ public class SingleCopyThread implements Runnable {
                 }
 
             }
+            singleWindow.showDoneLabel();
             singleWindow.setStopButtonUnavalible();
             this.stream.closeStreams();
 
@@ -88,7 +91,7 @@ public class SingleCopyThread implements Runnable {
         return null;
     }
 
-    public boolean isAbleToRead() throws IOException {
+    private boolean isAbleToRead() throws IOException {
         return (length = stream.inputStreamLength()) > 0 && isRunning;
     }
 
@@ -97,7 +100,25 @@ public class SingleCopyThread implements Runnable {
         isRunning = false;
     }
 
+    private void executeMethodOncePerSecond(long start) {
 
+        if((System.currentTimeMillis()-start)/1000==1) {
 
+            this.elapsedTime = (System.currentTimeMillis()-startTime)/1000;
+            this.start = System.currentTimeMillis();
+
+            singleWindow.setElapsedTime(elapsedTime);
+        }
+    }
+
+    private void setProgressBars() {
+        size += length;
+        if(size >= onePercent) {
+            size = 0;
+            progress += 0.01F;
+            singleWindow.setProgress(progress);
+
+        }
+    }
 }
 

@@ -3,6 +3,7 @@ package com.codecool.krk.windows;
 import com.codecool.krk.controller.SingleWindowController;
 import com.codecool.krk.fileThread.SingleCopyThread;
 import javafx.animation.AnimationTimer;
+import javafx.application.Platform;
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.DoubleProperty;
 import javafx.beans.property.SimpleBooleanProperty;
@@ -14,22 +15,21 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ProgressBar;
 import javafx.scene.control.ProgressIndicator;
-import javafx.scene.layout.Border;
 import javafx.scene.layout.BorderPane;
 
 
 import java.io.IOException;
+import java.time.LocalTime;
 
 
 public class SingleWindow {
 
 
     private ProgressBar bar;
-
-
     private ProgressIndicator progressLabel;
-
     private Button stop;
+    private Label elapsedTime;
+    private Label doneLabel;
 
 
 
@@ -51,7 +51,9 @@ public class SingleWindow {
 
         progressLabel = (ProgressIndicator) root.lookup("#progress");
         bar = (ProgressBar) root.lookup("#bar");
-        stop = (Button) root.lookup("#stop");
+        stop = (Button) root.lookup("#stopButton");
+        elapsedTime = (Label) root.lookup("#elapsedTime");
+        doneLabel = (Label) root.lookup("#doneLabel");
 
         sourceLabel.setText(source);
         destinationLabel.setText(destination);
@@ -65,6 +67,31 @@ public class SingleWindow {
     }
 
     public void setStopButtonUnavalible() {
+
         this.stop.setDisable(true);
     }
+
+    public void showDoneLabel() {
+        this.doneLabel.setVisible(true);
+    }
+
+
+    public void setElapsedTime(long seconds) {
+
+        LocalTime timeOfDay = LocalTime.ofSecondOfDay(seconds);
+        String time = timeOfDay.toString();
+
+
+        Platform.runLater(new Runnable() {
+
+            @Override public void run() {
+                elapsedTime.setText(String.valueOf(time));
+            }
+        });
+
+
+    }
+
+
+
 }

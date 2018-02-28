@@ -9,9 +9,11 @@
    <bottom>
       <HBox alignment="CENTER_RIGHT" BorderPane.alignment="TOP_RIGHT">
          <children>
-            <Label fx:id="time" text="Label" />
+            <Label fx:id="elapsedTime" text="00:00:00" />
             <Region prefWidth="200.0" HBox.hgrow="ALWAYS" />
-            <Button fx:id="stop" mnemonicParsing="false" onAction="#stopOnAction" text="STOP" />
+            <Label fx:id="doneLabel" text="DONE" visible="false"/>
+            <Region prefWidth="200.0" HBox.hgrow="ALWAYS" />
+            <Button fx:id="stopButton" mnemonicParsing="false" onAction="#stopOnAction" text="STOP" />
          </children>
          <BorderPane.margin>
             <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
