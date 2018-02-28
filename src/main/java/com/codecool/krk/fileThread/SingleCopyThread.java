@@ -119,6 +119,7 @@ public class SingleCopyThread implements Runnable {
 
 
     private void setProgressBars() {
+        
         size += length;
         if (size >= onePercent) {
             size = 0;
