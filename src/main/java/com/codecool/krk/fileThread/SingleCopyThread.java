@@ -130,13 +130,13 @@ public class SingleCopyThread implements Runnable {
 
     private void setFinalStatusElements() {
 
+        singleWindow.setStopButtonUnavalible();
+
         if (isRunning) {
             singleWindow.setInfoLabelStatus("Operation finished successfully");
-            singleWindow.setStopButtonUnavalible();
             singleWindow.setProgress(1F);
         } else {
             singleWindow.setInfoLabelStatus("Operation interrupted");
-            singleWindow.setStopButtonUnavalible();
         }
     }
 }
