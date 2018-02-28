@@ -15,8 +15,8 @@ public class SingleCopyThread implements Runnable {
     private long startTime;
     private long start;
     private long onePercent;
-    private long size = 0;
-    private double progress = 0F;
+    private long size;
+    private double progress;
     private static ArrayList<SingleCopyThread> threadList = new ArrayList<>();
 
 
@@ -50,13 +50,12 @@ public class SingleCopyThread implements Runnable {
     private void call() throws IOException, InterruptedException {
 
         singleWindow.setInfoLabelStatus("");
-        onePercent = stream.getInputStream().available()/100;
+        onePercent = stream.getInputStream().available()/1000;
 
         start = System.currentTimeMillis();
 
         try {
             while (isAbleToRead()) {
-
                 Thread.sleep(1);
                 executeMethodOncePerSecond(start);
                 try {
@@ -66,7 +65,6 @@ public class SingleCopyThread implements Runnable {
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
-
             }
             setFinalStatusElements();
             this.stream.closeStreams();
@@ -123,7 +121,7 @@ public class SingleCopyThread implements Runnable {
         size += length;
         if (size >= onePercent) {
             size = 0;
-            progress += 0.01F;
+            progress += 0.001F;
             singleWindow.setProgress(progress);
         }
     }
