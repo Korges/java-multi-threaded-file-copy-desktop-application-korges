@@ -1,11 +1,10 @@
 package com.codecool.krk.fileThread;
 
-
 import com.codecool.krk.fileStream.CustomFileStream;
 import com.codecool.krk.windows.SingleWindow;
-
 import java.io.IOException;
 import java.util.ArrayList;
+
 
 public class SingleCopyThread implements Runnable {
 
@@ -14,7 +13,6 @@ public class SingleCopyThread implements Runnable {
     private int length;
     private boolean isRunning;
     private long startTime;
-    private long elapsedTime;
     private long start;
     private long onePercent;
     private long size = 0;
@@ -22,16 +20,19 @@ public class SingleCopyThread implements Runnable {
     private static ArrayList<SingleCopyThread> threadList = new ArrayList<>();
 
 
-
     public void setSingleWindow(SingleWindow singleWindow) {
+
         this.singleWindow = singleWindow;
     }
 
+
     public SingleCopyThread(CustomFileStream stream) {
+
         this.stream = stream;
         this.isRunning = true;
         threadList.add(this);
     }
+
 
     @Override
     public void run() {
@@ -40,14 +41,13 @@ public class SingleCopyThread implements Runnable {
 
         try {
             call();
-        } catch (IOException e) {
-
-        } catch (InterruptedException e) {
+        } catch (IOException | InterruptedException e) {
             e.printStackTrace();
         }
     }
 
-    protected void call() throws IOException, InterruptedException {
+
+    private void call() throws IOException, InterruptedException {
 
         singleWindow.setInfoLabelStatus("");
         onePercent = stream.getInputStream().available()/100;
@@ -76,53 +76,61 @@ public class SingleCopyThread implements Runnable {
         }
     }
 
+
     public static ArrayList<SingleCopyThread> getAllThreads() {
+
         return threadList;
     }
 
-    public static SingleCopyThread getSingleThreadByName(String name) {
+
+    public static SingleCopyThread getSingleThreadByName(String destination) {
+
         for (SingleCopyThread el : threadList) {
-            if (el.stream.getFileName().equals(name)) {
+            if (el.stream.getDestination().equals(destination)) {
                 return el;
             }
         }
         return null;
     }
 
+
     private boolean isAbleToRead() throws IOException {
+
         return (length = stream.inputStreamLength()) > 0 && isRunning;
     }
+
 
     public void interruptThread() throws NullPointerException {
 
         isRunning = false;
     }
 
+
     private void executeMethodOncePerSecond(long start) {
 
         if((System.currentTimeMillis()-start)/1000==1) {
 
-            this.elapsedTime = (System.currentTimeMillis()-startTime)/1000;
+            long elapsedTime = (System.currentTimeMillis() - startTime) / 1000;
             this.start = System.currentTimeMillis();
 
             singleWindow.setElapsedTime(elapsedTime);
         }
     }
 
+
     private void setProgressBars() {
         size += length;
-        if((size >= onePercent)) {
+        if (size >= onePercent) {
             size = 0;
             progress += 0.01F;
             singleWindow.setProgress(progress);
-
         }
-
     }
+
 
     private void setFinalStatusElements() {
 
-        if(isRunning) {
+        if (isRunning) {
             singleWindow.setInfoLabelStatus("Operation finished successfully");
             singleWindow.setStopButtonUnavalible();
             singleWindow.setProgress(1F);
@@ -130,7 +138,6 @@ public class SingleCopyThread implements Runnable {
             singleWindow.setInfoLabelStatus("Operation interrupted");
             singleWindow.setStopButtonUnavalible();
         }
-
     }
 }
 

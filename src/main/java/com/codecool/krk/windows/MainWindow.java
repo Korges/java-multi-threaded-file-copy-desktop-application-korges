@@ -1,6 +1,5 @@
 package com.codecool.krk.windows;
 
-
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -10,14 +9,15 @@ import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import java.io.IOException;
 
+
 public class MainWindow {
 
     static Parent  root;
     static VBox vBox;
 
 
-
     public void display(Stage primaryStage) throws IOException {
+
         root = FXMLLoader.load(getClass().getResource("/MainWindow.fxml"));
         primaryStage.setTitle("Multi-threaded File Copy Desktop Application");
         primaryStage.setScene(new Scene(root));
@@ -30,12 +30,11 @@ public class MainWindow {
 
     }
 
+
     public static void addPaneToVBox(BorderPane pane) {
+
         vBox.getChildren().add(pane);
     }
-
-
-
 }
 
 

@@ -24,8 +24,6 @@ public class CopyWindowController {
     static Integer amount = 0;
     AlertWindow alert;
 
-
-
     @FXML
     private BorderPane borderPane;
 
@@ -38,7 +36,8 @@ public class CopyWindowController {
     @FXML
     private CheckBox overwrite;
 
-    public CopyWindowController( ) {
+    public CopyWindowController() {
+
         this.alert = new AlertWindow();
     }
 
@@ -59,9 +58,7 @@ public class CopyWindowController {
             alert.display("Warning", "This file doesn't exist!");
         } catch (WrongDestinationException e) {
             alert.display("Warning", "Destination Path cannot be empty!");
-
         }
-
     }
 
     @FXML
@@ -69,6 +66,7 @@ public class CopyWindowController {
         Stage stage = (Stage) borderPane.getScene().getWindow();
         stage.close();
     }
+
 
     public SingleCopyThread createThread() throws FileNotFoundException, WrongDestinationException {
 
@@ -83,24 +81,22 @@ public class CopyWindowController {
 
         }
         return thread;
-
-
-
-
     }
+
 
     private boolean checkIfDestinationExists() {
 
         return new File(destinationPath).isFile();
     }
 
+
     public void runThread(SingleCopyThread thread) {
 
         ThreadPool.createThreadPool(thread);
     }
 
-    public void createSourceAndDestinationPath() throws FileNotFoundException, WrongDestinationException {
 
+    public void createSourceAndDestinationPath() throws FileNotFoundException, WrongDestinationException {
 
 
         sourcePath = source.textProperty().getValue();
@@ -116,6 +112,7 @@ public class CopyWindowController {
             destinationPath = splittedDestination[0] + "(" + amount + ")" + splittedDestination[1];
         }
     }
+
 
     public void checkIfCorrectSourceAndDestination() throws FileNotFoundException, WrongDestinationException {
 

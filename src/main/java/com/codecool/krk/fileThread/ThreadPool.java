@@ -6,7 +6,6 @@ import java.util.concurrent.Executors;
 
 public class ThreadPool {
 
-
     static ExecutorService executor = Executors.newFixedThreadPool(2);
 
 

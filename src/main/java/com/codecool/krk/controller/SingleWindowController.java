@@ -5,19 +5,19 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 
+
 public class SingleWindowController {
 
     public Label elapsedTime;
     public Button stopButton;
 
     @FXML
-    private Label source;
+    private Label destination;
 
     @FXML
     public void stopOnAction() {
-        SingleCopyThread thread = SingleCopyThread.getSingleThreadByName(source.getText());
+
+        SingleCopyThread thread = SingleCopyThread.getSingleThreadByName(destination.getText());
         thread.interruptThread();
     }
-
-
 }

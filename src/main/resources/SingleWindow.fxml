@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.lang.*?>
 <?import javafx.scene.text.*?>
 <?import javafx.geometry.*?>
 <?import javafx.scene.control.*?>
@@ -12,7 +11,7 @@
          <children>
             <Label fx:id="elapsedTime" text="00:00:00" />
             <Region HBox.hgrow="ALWAYS" />
-            <Label fx:id="infoLabel" text="Waiting for free Thread" visible="true" />
+            <Label fx:id="infoLabel" text="Waiting for free Thread"/>
             <Region HBox.hgrow="ALWAYS" />
             <Button fx:id="stopButton" mnemonicParsing="false" onAction="#stopOnAction" text="STOP" />
          </children>

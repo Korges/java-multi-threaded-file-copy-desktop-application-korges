@@ -6,9 +6,8 @@ import javafx.fxml.FXML;
 import java.io.IOException;
 import java.util.ArrayList;
 
+
 public class MainWindowController {
-
-
 
     @FXML
     public void copyOnAction() throws IOException {
@@ -23,6 +22,4 @@ public class MainWindowController {
             thread.interruptThread();
         }
     }
-
-
 }

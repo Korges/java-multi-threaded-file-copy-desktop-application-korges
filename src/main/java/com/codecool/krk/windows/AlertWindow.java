@@ -6,10 +6,11 @@ import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
-
 import java.io.IOException;
 
+
 public class AlertWindow {
+
 
     public void display(String title, String message) throws IOException {
 
@@ -25,6 +26,5 @@ public class AlertWindow {
 
         window.setScene(new Scene(root));
         window.show();
-
     }
 }

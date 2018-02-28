@@ -1,7 +1,7 @@
 package com.codecool.krk.fileStream;
 
-
 import java.io.*;
+
 
 public class CustomFileStream {
 
@@ -9,7 +9,6 @@ public class CustomFileStream {
     private OutputStream os;
     private String fileName;
     private String destination;
-
     private final int bytes = 1024;
     private byte[] buffer = new byte[bytes];
 
@@ -22,22 +21,37 @@ public class CustomFileStream {
 
 
     public InputStream getInputStream() {
+
         return is;
     }
 
+
     public OutputStream getOutputStream() {
+
         return os;
     }
 
+
     public byte[] getBuffer() {
+
         return buffer;
     }
 
+
     public String getFileName() {
+
         return fileName;
     }
 
+
+    public String getDestination() {
+
+        return destination;
+    }
+
+
     public int inputStreamLength() throws IOException {
+
         return this.is.read(buffer);
     }
 

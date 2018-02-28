@@ -1,6 +1,5 @@
 package com.codecool.krk.windows;
 
-
 import com.codecool.krk.fileThread.SingleCopyThread;
 import javafx.application.Platform;
 import javafx.fxml.FXMLLoader;
@@ -15,24 +14,21 @@ import java.time.LocalTime;
 
 public class SingleWindow {
 
-
     private ProgressBar bar;
     private ProgressIndicator progressLabel;
     private Button stop;
     private Label elapsedTime;
     private Label infoLabel;
+    private SingleCopyThread singleThread;
 
-
-
-
-    SingleCopyThread singleThread;
 
     public SingleWindow(SingleCopyThread singleCopyThread) {
+
         this.singleThread = singleCopyThread;
     }
 
-    public BorderPane createNewThread(String source, String destination) throws IOException {
 
+    public BorderPane createNewThread(String source, String destination) throws IOException {
 
         BorderPane root = FXMLLoader.load(getClass().getResource("/SingleWindow.fxml"));
         Label sourceLabel = (Label) root.lookup("#source");
@@ -50,6 +46,7 @@ public class SingleWindow {
         return root;
     }
 
+
     public void setProgress(double value) {
 
         Platform.runLater(new Runnable() {
@@ -61,6 +58,7 @@ public class SingleWindow {
             }
         });
     }
+
 
     public void setStopButtonUnavalible() {
 
@@ -86,7 +84,6 @@ public class SingleWindow {
 
         LocalTime timeOfDay = LocalTime.ofSecondOfDay(seconds);
         String time = timeOfDay.toString();
-
 
         Platform.runLater(new Runnable() {
 
