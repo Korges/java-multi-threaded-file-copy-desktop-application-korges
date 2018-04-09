@@ -8,7 +8,7 @@ Main application window :
 
 Copy file dialog
 
-![Alt text](image-b.PNG?raw=true "Main Window")
+![Alt text](image-b.PNG?raw=true "Main Window")  
 "From" and "To" are absolute file paths.
 
 **How Does It Work You Ask?**
