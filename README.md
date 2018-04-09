@@ -18,5 +18,5 @@ Copy file dialog
 * Each copy operation is displayed as follows.
 * Title: contains what is copied where.
 * Progress: displays how many bytes of the source file is copied to the destination path in percentage.
-_E.g. if the source is file's size is 100MBs and the progress bar is at 33% then 33MBs are copied to the destination file.
-Stop button: by clicking on it the copy operation is cancelled._
+E.g. if the source is file's size is 100MBs and the progress bar is at 33% then 33MBs are copied to the destination file.
+Stop button: by clicking on it the copy operation is cancelled.
