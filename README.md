@@ -11,7 +11,7 @@ Copy file dialog
 ![Alt text](image-b.PNG?raw=true "Main Window")
 "From" and "To" are absolute file paths.
 
-** How Does It Work You Ask? **
+**How Does It Work You Ask?**
 * Users can start a "copy operation" by clicking on a "Copy" button.
 * After that a "copy dialog" is shown to the user where users can specify what to copy, where to copy, should the destination file be overridden?
 * Currently running copy operations are shown in the "main window".
